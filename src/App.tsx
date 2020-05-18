@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './style.css';
+
+class App extends React.Component {
+  myCanvas: any;
+  constructor(props: any) {
+    super(props);
+    this.myCanvas = React.createRef();
+  }
+
+  setupCanvas = () => {
+    this.myCanvas.current.style.background = 'white';
+    this.myCanvas.current.height = window.innerHeight / 2;
+    this.myCanvas.current.width = window.innerWidth / 2;
+  };
+
+  componentDidMount() {
+    this.setupCanvas();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Game Development</h1>
+        <canvas ref={this.myCanvas} />
+      </div>
+    );
+  }
 }
 
 export default App;
