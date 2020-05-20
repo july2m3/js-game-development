@@ -93,7 +93,9 @@ class Main extends React.Component<MyProps, MyState> {
                 Collision Detection example
               </button>
 
-              <button onClick={this.showTileMap}>Show TileMap</button>
+              <button onClick={this.showTileMap}>
+                Show TileMap (in progress lol)
+              </button>
               <button onClick={this.showDiceRoll}>Show DiceRoll</button>
             </div>
           )}
