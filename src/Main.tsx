@@ -8,6 +8,7 @@ import React from 'react';
 import RunAndJump from './Run-And-Jump-Example/App';
 import Collision from './Collision-Detection/App';
 import TileMap from './Tilemap/App';
+import DiceRoll from './DiceRoll/App';
 
 import './style.css';
 
@@ -17,6 +18,7 @@ type MyState = {
   showCollision: boolean;
   showOptions: boolean;
   showTileMap: boolean;
+  showDiceRoll: boolean;
 };
 
 class Main extends React.Component<MyProps, MyState> {
@@ -27,6 +29,7 @@ class Main extends React.Component<MyProps, MyState> {
       showRunAndJump: false,
       showCollision: false,
       showTileMap: false,
+      showDiceRoll: false,
     };
   }
 
@@ -47,6 +50,12 @@ class Main extends React.Component<MyProps, MyState> {
     this.blockButtons();
   };
 
+  showDiceRoll = () => {
+    this.setState({ showDiceRoll: true });
+    this.setState({ showOptions: false });
+    this.blockButtons();
+  };
+
   blockButtons = () => {};
 
   refreshPage = () => {
@@ -54,7 +63,13 @@ class Main extends React.Component<MyProps, MyState> {
   };
 
   render(
-    { showOptions, showRunAndJump, showCollision, showTileMap } = this.state,
+    {
+      showOptions,
+      showRunAndJump,
+      showCollision,
+      showTileMap,
+      showDiceRoll,
+    } = this.state,
   ) {
     return (
       <div className="main">
@@ -62,6 +77,7 @@ class Main extends React.Component<MyProps, MyState> {
           {showRunAndJump && <RunAndJump />}
           {showCollision && <Collision />}
           {showTileMap && <TileMap />}
+          {showDiceRoll && <DiceRoll />}
         </div>
         <div className="buttons">
           {!showOptions && (
@@ -78,6 +94,7 @@ class Main extends React.Component<MyProps, MyState> {
               </button>
 
               <button onClick={this.showTileMap}>Show TileMap</button>
+              <button onClick={this.showDiceRoll}>Show DiceRoll</button>
             </div>
           )}
         </div>
