@@ -52,7 +52,9 @@ class Main extends React.Component<MyProps, MyState> {
           {showCollision && <Collision />}
         </div>
         <div className="buttons">
-          <button onClick={this.refreshPage}>Reload page</button>
+          {!showOptions && (
+            <button onClick={this.refreshPage}>Reload page</button>
+          )}
           {showOptions && (
             <div>
               <button onClick={this.showRunAndJump}>

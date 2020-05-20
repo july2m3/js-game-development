@@ -8,18 +8,17 @@ html {
   height: 100%;
 }
 
-.App {
+body {
   background-color: #202830;
+  color: #ffff;
+}
+
+.App {
   min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-h1,
-h2 {
-  color: #fff;
 }
 
 h2 {
@@ -28,23 +27,32 @@ h2 {
 
 .main {
   display: flex;
-
   min-height: 100vh;
 }
 
 .showcase {
   height: 100vh;
   width: 80%;
-  border: 1px solid pink;
+  border-right: 5px solid white;
 }
 
 .buttons {
-  border: solid 1px blue;
-  color: pink;
+  margin-top: 20px;
   width: 20%;
+  text-align: center;
 }
 
 .buttons button {
+  background-color: white;
+  color: black;
+  border: 2px solid #008cba;
   padding: 10px;
   margin: 10px;
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+.buttons button:hover {
+  background-color: #008cba;
+  color: white;
 }
