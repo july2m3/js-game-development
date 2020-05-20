@@ -28,14 +28,11 @@ class Main extends React.Component<MyProps, MyState> {
   }
 
   showRunAndJump = () => {
-    // this.setState({ showCollision: false });
     this.setState({ showRunAndJump: true });
     this.setState({ showOptions: false });
   };
 
   showCollision = () => {
-    // this.refreshPage();
-    // this.setState({ showRunAndJump: false });
     this.setState({ showCollision: true });
     this.setState({ showOptions: false });
     this.blockButtons();
