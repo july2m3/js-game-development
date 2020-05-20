@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
-import './style.css';
+import '../style.css';
 
 class App extends React.Component {
   myCanvas: any;

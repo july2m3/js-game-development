@@ -7,6 +7,7 @@ import React from 'react';
 
 import RunAndJump from './Run-And-Jump-Example/App';
 import Collision from './Collision-Detection/App';
+import TileMap from './Tilemap/App';
 
 import './style.css';
 
@@ -15,6 +16,7 @@ type MyState = {
   showRunAndJump: boolean;
   showCollision: boolean;
   showOptions: boolean;
+  showTileMap: boolean;
 };
 
 class Main extends React.Component<MyProps, MyState> {
@@ -24,6 +26,7 @@ class Main extends React.Component<MyProps, MyState> {
       showOptions: true,
       showRunAndJump: false,
       showCollision: false,
+      showTileMap: false,
     };
   }
 
@@ -38,18 +41,27 @@ class Main extends React.Component<MyProps, MyState> {
     this.blockButtons();
   };
 
+  showTileMap = () => {
+    this.setState({ showTileMap: true });
+    this.setState({ showOptions: false });
+    this.blockButtons();
+  };
+
   blockButtons = () => {};
 
   refreshPage = () => {
     window.location.reload(false);
   };
 
-  render({ showOptions, showRunAndJump, showCollision } = this.state) {
+  render(
+    { showOptions, showRunAndJump, showCollision, showTileMap } = this.state,
+  ) {
     return (
       <div className="main">
         <div className="showcase">
           {showRunAndJump && <RunAndJump />}
           {showCollision && <Collision />}
+          {showTileMap && <TileMap />}
         </div>
         <div className="buttons">
           {!showOptions && (
@@ -64,6 +76,8 @@ class Main extends React.Component<MyProps, MyState> {
               <button onClick={this.showCollision}>
                 Collision Detection example
               </button>
+
+              <button onClick={this.showTileMap}>Show TileMap</button>
             </div>
           )}
         </div>
