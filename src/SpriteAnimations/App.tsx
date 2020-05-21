@@ -107,7 +107,7 @@ class App extends React.Component {
     ctx.drawImage(
       this.gridImage,
       w * tile,
-      sizeOfTiles,
+      16,
       w,
       w,
       x,
