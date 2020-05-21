@@ -8,7 +8,7 @@ import React from 'react';
 import RunAndJump from './Run-And-Jump-Example/App';
 import Collision from './Collision-Detection/App';
 import TileMap from './Tilemap/App';
-import DiceRoll from './DiceRoll/App';
+import SpriteAnimations from './SpriteAnimations/App';
 
 import './style.css';
 
@@ -18,7 +18,7 @@ type MyState = {
   showCollision: boolean;
   showOptions: boolean;
   showTileMap: boolean;
-  showDiceRoll: boolean;
+  showSpriteAnimation: boolean;
 };
 
 class Main extends React.Component<MyProps, MyState> {
@@ -29,7 +29,7 @@ class Main extends React.Component<MyProps, MyState> {
       showRunAndJump: false,
       showCollision: false,
       showTileMap: false,
-      showDiceRoll: false,
+      showSpriteAnimation: false,
     };
   }
 
@@ -50,8 +50,8 @@ class Main extends React.Component<MyProps, MyState> {
     this.blockButtons();
   };
 
-  showDiceRoll = () => {
-    this.setState({ showDiceRoll: true });
+  showSpriteAnimation = () => {
+    this.setState({ showSpriteAnimation: true });
     this.setState({ showOptions: false });
     this.blockButtons();
   };
@@ -68,7 +68,7 @@ class Main extends React.Component<MyProps, MyState> {
       showRunAndJump,
       showCollision,
       showTileMap,
-      showDiceRoll,
+      showSpriteAnimation,
     } = this.state,
   ) {
     return (
@@ -77,7 +77,7 @@ class Main extends React.Component<MyProps, MyState> {
           {showRunAndJump && <RunAndJump />}
           {showCollision && <Collision />}
           {showTileMap && <TileMap />}
-          {showDiceRoll && <DiceRoll />}
+          {showSpriteAnimation && <SpriteAnimations />}
         </div>
         <div className="buttons">
           {!showOptions && (
@@ -93,10 +93,10 @@ class Main extends React.Component<MyProps, MyState> {
                 Collision Detection example
               </button>
 
-              <button onClick={this.showTileMap}>
-                Show TileMap (in progress lol)
+              <button onClick={this.showTileMap}>Show TileMap</button>
+              <button onClick={this.showSpriteAnimation}>
+                Show SpriteAnimations
               </button>
-              <button onClick={this.showDiceRoll}>Show DiceRoll</button>
             </div>
           )}
         </div>
