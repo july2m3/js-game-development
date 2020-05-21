@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/js-game-development/static/css/main.3d0044ef.chunk.css",
-    "main.js": "/js-game-development/static/js/main.11159c58.chunk.js",
-    "main.js.map": "/js-game-development/static/js/main.11159c58.chunk.js.map",
+    "main.js": "/js-game-development/static/js/main.3bb3c160.chunk.js",
+    "main.js.map": "/js-game-development/static/js/main.3bb3c160.chunk.js.map",
     "runtime-main.js": "/js-game-development/static/js/runtime-main.bfc94713.js",
     "runtime-main.js.map": "/js-game-development/static/js/runtime-main.bfc94713.js.map",
     "static/js/2.0db6faef.chunk.js": "/js-game-development/static/js/2.0db6faef.chunk.js",
     "static/js/2.0db6faef.chunk.js.map": "/js-game-development/static/js/2.0db6faef.chunk.js.map",
     "index.html": "/js-game-development/index.html",
-    "precache-manifest.3ce2c603505be7b12755dd733045e129.js": "/js-game-development/precache-manifest.3ce2c603505be7b12755dd733045e129.js",
+    "precache-manifest.694951d57de0c686aae2d948f1b8e7b3.js": "/js-game-development/precache-manifest.694951d57de0c686aae2d948f1b8e7b3.js",
     "service-worker.js": "/js-game-development/service-worker.js",
     "static/css/main.3d0044ef.chunk.css.map": "/js-game-development/static/css/main.3d0044ef.chunk.css.map",
     "static/js/2.0db6faef.chunk.js.LICENSE.txt": "/js-game-development/static/js/2.0db6faef.chunk.js.LICENSE.txt",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.bfc94713.js",
     "static/js/2.0db6faef.chunk.js",
     "static/css/main.3d0044ef.chunk.css",
-    "static/js/main.11159c58.chunk.js"
+    "static/js/main.3bb3c160.chunk.js"
   ]
 }
