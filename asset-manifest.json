@@ -1,24 +1,23 @@
 {
   "files": {
     "main.css": "/js-game-development/static/css/main.3d0044ef.chunk.css",
-    "main.js": "/js-game-development/static/js/main.3bb3c160.chunk.js",
-    "main.js.map": "/js-game-development/static/js/main.3bb3c160.chunk.js.map",
+    "main.js": "/js-game-development/static/js/main.4edf3d4a.chunk.js",
+    "main.js.map": "/js-game-development/static/js/main.4edf3d4a.chunk.js.map",
     "runtime-main.js": "/js-game-development/static/js/runtime-main.bfc94713.js",
     "runtime-main.js.map": "/js-game-development/static/js/runtime-main.bfc94713.js.map",
-    "static/js/2.0db6faef.chunk.js": "/js-game-development/static/js/2.0db6faef.chunk.js",
-    "static/js/2.0db6faef.chunk.js.map": "/js-game-development/static/js/2.0db6faef.chunk.js.map",
+    "static/js/2.ead76def.chunk.js": "/js-game-development/static/js/2.ead76def.chunk.js",
+    "static/js/2.ead76def.chunk.js.map": "/js-game-development/static/js/2.ead76def.chunk.js.map",
     "index.html": "/js-game-development/index.html",
-    "precache-manifest.694951d57de0c686aae2d948f1b8e7b3.js": "/js-game-development/precache-manifest.694951d57de0c686aae2d948f1b8e7b3.js",
+    "precache-manifest.72c990fc423e27509760950ab2d020fc.js": "/js-game-development/precache-manifest.72c990fc423e27509760950ab2d020fc.js",
     "service-worker.js": "/js-game-development/service-worker.js",
     "static/css/main.3d0044ef.chunk.css.map": "/js-game-development/static/css/main.3d0044ef.chunk.css.map",
-    "static/js/2.0db6faef.chunk.js.LICENSE.txt": "/js-game-development/static/js/2.0db6faef.chunk.js.LICENSE.txt",
-    "static/media/borderless.png": "/js-game-development/static/media/borderless.b3f0e1f5.png",
+    "static/js/2.ead76def.chunk.js.LICENSE.txt": "/js-game-development/static/js/2.ead76def.chunk.js.LICENSE.txt",
     "static/media/minotaur.png": "/js-game-development/static/media/minotaur.528c6775.png"
   },
   "entrypoints": [
     "static/js/runtime-main.bfc94713.js",
-    "static/js/2.0db6faef.chunk.js",
+    "static/js/2.ead76def.chunk.js",
     "static/css/main.3d0044ef.chunk.css",
-    "static/js/main.3bb3c160.chunk.js"
+    "static/js/main.4edf3d4a.chunk.js"
   ]
 }
