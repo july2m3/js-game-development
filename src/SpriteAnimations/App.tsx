@@ -3,41 +3,27 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
+import Minotaur from './minotaur.png'; // 93 x 100
 import '../style.css';
 
-// 1024 x 1920
-// 11 x 20
-// 92 x 96
-import Minotaur from './minotaur.png';
-import fantasyTiles from './borderless.png';
+import Sprite from './Sprite';
 
-// const sizeOfTiles = 16;
-const sizeOfTiles = 128;
-const sizeBetweenTiles = sizeOfTiles * 2;
-
-// let stop = false;
-// let frameCount = 0;
 const fps = 5;
 let startTime;
 let fpsInterval: any;
 let now: any;
 let then: any;
 let elapsed: any;
-const randomSeed = Math.random() * 100;
 
 class App extends React.Component {
   myCanvas: any;
 
-  frame: number;
-
-  gridImage: any;
-
-  minotaurImage: any;
+  mySprite: Sprite;
 
   constructor(props: any) {
     super(props);
     this.myCanvas = React.createRef();
-    this.frame = 0;
+    this.mySprite = new Sprite(Minotaur, 93, 100, 5);
   }
 
   componentDidMount() {
@@ -45,106 +31,24 @@ class App extends React.Component {
     fpsInterval = 1000 / fps;
     then = Date.now();
     startTime = then;
-
-    //load fantasy tiles
-    this.gridImage = new Image(32, 32);
-    this.gridImage.src = fantasyTiles;
-
-    //load minotaur image
-    this.minotaurImage = new Image(93, 100);
-    this.minotaurImage.src = Minotaur;
-
     this.gameLoop();
   }
 
-  clearScreen = () => {
-    const ctx = this.myCanvas.current.getContext('2d');
-    ctx.clearRect(
-      0,
-      0,
-      this.myCanvas.current.width,
-      this.myCanvas.current.height,
-    );
-  };
-
-  drawStrip = (
-    x: number,
-    y: number,
-    frame = 0,
-    image = this.minotaurImage,
-    scale = 200,
-  ) => {
-    const ctx = document.querySelector('canvas')?.getContext('2d')!;
-    ctx.drawImage(
-      image,
-      image.width * frame,
-      0,
-      image.width,
-      image.height,
-      x - frame * 7,
-      y,
-      scale,
-      scale,
-    );
-  };
-
-  drawHexImage = (x: number, y: number, tile = Math.random() * 7) => {
-    const ctx = document.querySelector('canvas')?.getContext('2d')!;
-    const w = 32;
-
-    ctx.drawImage(
-      this.gridImage,
-      w * tile,
-      16,
-      w,
-      w,
-      x,
-      y,
-      sizeOfTiles,
-      sizeOfTiles,
-    );
-  };
-
-  drawGridOfImages = () => {
-    let xOffset = 0;
-
-    for (
-      let x = 0;
-      x * sizeOfTiles * 1.5 + xOffset < this.myCanvas.current.width;
-      x += 1
-    ) {
-      for (
-        let y = 0;
-        (y * Math.sqrt(3) * sizeOfTiles) / 4 < this.myCanvas.current.height;
-        y += 1
-      ) {
-        xOffset = y % 2 === 0 ? sizeOfTiles * 0.75 : 0;
-        this.drawHexImage(
-          x * sizeOfTiles * 1.5 + xOffset,
-          (y * (Math.sqrt(3) * sizeOfTiles)) / 4,
-          Math.floor(x * y * randomSeed) % 6,
-        );
-      }
-    }
-  };
-
   gameLoop = () => {
-    // this.clearScreen();
     window.requestAnimationFrame(this.gameLoop);
 
     // calc elapsed time since last loop
-
     now = Date.now();
     elapsed = now - then;
 
     // if enough time has elapsed, draw the next frame
     if (elapsed > fpsInterval) {
-      if (this.frame >= 5) {
-        this.frame = 0;
-      }
-      this.drawGridOfImages();
-      this.drawStrip(70, 100, this.frame);
-      this.frame += 1;
+      this.mySprite.drawStrip(
+        this.myCanvas.current.getContext('2d'),
+        200,
+        100,
+        200,
+      );
 
       // Get ready for next frame by setting then=now, but also adjust for your
       // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
@@ -154,8 +58,8 @@ class App extends React.Component {
 
   setupCanvas = () => {
     this.myCanvas.current.style.background = 'white';
-    this.myCanvas.current.height = window.innerHeight / 2;
-    this.myCanvas.current.width = window.innerWidth / 2;
+    this.myCanvas.current.height = window.innerHeight * 0.7;
+    this.myCanvas.current.width = window.innerWidth * 0.7;
   };
 
   render() {
