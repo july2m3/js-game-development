@@ -9,92 +9,60 @@ import RunAndJump from './Run-And-Jump-Example/App';
 import Collision from './Collision-Detection/App';
 import TileMap from './Tilemap/App';
 import SpriteAnimations from './SpriteAnimations/App';
+import HexTileMap from './Hex-TileMap/App';
 
 import './style.css';
 
 type MyProps = {};
 type MyState = {
-  showRunAndJump: boolean;
-  showCollision: boolean;
+  currentOption: any;
   showOptions: boolean;
-  showTileMap: boolean;
-  showSpriteAnimation: boolean;
 };
 
 class Main extends React.Component<MyProps, MyState> {
   constructor(props: any) {
     super(props);
     this.state = {
+      currentOption: null,
       showOptions: true,
-      showRunAndJump: false,
-      showCollision: false,
-      showTileMap: false,
-      showSpriteAnimation: false,
     };
   }
 
-  showRunAndJump = () => {
-    this.setState({ showRunAndJump: true });
-    this.setState({ showOptions: false });
+  showMap = (map: any) => {
+    this.setState({ currentOption: map });
+    this.optionPicked();
   };
 
-  showCollision = () => {
-    this.setState({ showCollision: true });
+  optionPicked = () => {
     this.setState({ showOptions: false });
-    this.blockButtons();
   };
-
-  showTileMap = () => {
-    this.setState({ showTileMap: true });
-    this.setState({ showOptions: false });
-    this.blockButtons();
-  };
-
-  showSpriteAnimation = () => {
-    this.setState({ showSpriteAnimation: true });
-    this.setState({ showOptions: false });
-    this.blockButtons();
-  };
-
-  blockButtons = () => {};
 
   refreshPage = () => {
     window.location.reload(false);
   };
 
-  render(
-    {
-      showOptions,
-      showRunAndJump,
-      showCollision,
-      showTileMap,
-      showSpriteAnimation,
-    } = this.state,
-  ) {
+  render({ currentOption, showOptions } = this.state) {
     return (
       <div className="main">
-        <div className="showcase">
-          {showRunAndJump && <RunAndJump />}
-          {showCollision && <Collision />}
-          {showTileMap && <TileMap />}
-          {showSpriteAnimation && <SpriteAnimations />}
-        </div>
+        <div className="showcase">{currentOption}</div>
         <div className="buttons">
           {!showOptions && (
             <button onClick={this.refreshPage}>Reload page</button>
           )}
           {showOptions && (
             <div>
-              <button onClick={this.showRunAndJump}>
+              <button onClick={() => this.showMap(<RunAndJump />)}>
                 Running and Jump Example
               </button>
 
-              <button onClick={this.showCollision}>
+              <button onClick={() => this.showMap(<Collision />)}>
                 Collision Detection example
               </button>
 
-              <button onClick={this.showTileMap}>Show TileMap</button>
-              <button onClick={this.showSpriteAnimation}>
+              <button onClick={() => this.showMap(<TileMap />)}>
+                Show TileMap
+              </button>
+              <button onClick={() => this.showMap(<SpriteAnimations />)}>
                 Show SpriteAnimations
               </button>
             </div>
