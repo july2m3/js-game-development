@@ -101,8 +101,8 @@ class App extends React.Component {
 
   setupCanvas = () => {
     this.myCanvas.current.style.background = 'white';
-    this.myCanvas.current.height = window.innerHeight / 2;
-    this.myCanvas.current.width = window.innerWidth / 2;
+    this.myCanvas.current.height = window.innerHeight * 0.7;
+    this.myCanvas.current.width = window.innerWidth * 0.7;
   };
 
   render() {

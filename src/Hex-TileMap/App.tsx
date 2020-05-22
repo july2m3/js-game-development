@@ -5,14 +5,9 @@ import React from 'react';
 
 import '../style.css';
 
-// 1024 x 1920
-// 11 x 20
-// 92 x 96
-import Minotaur from './minotaur.png';
 import fantasyTiles from './borderless.png';
 
-// const sizeOfTiles = 16;
-const sizeOfTiles = 128;
+const sizeOfTiles = 64;
 const sizeBetweenTiles = sizeOfTiles * 2;
 
 // let stop = false;
@@ -28,16 +23,11 @@ const randomSeed = Math.random() * 100;
 class App extends React.Component {
   myCanvas: any;
 
-  frame: number;
-
   gridImage: any;
-
-  minotaurImage: any;
 
   constructor(props: any) {
     super(props);
     this.myCanvas = React.createRef();
-    this.frame = 0;
   }
 
   componentDidMount() {
@@ -50,10 +40,6 @@ class App extends React.Component {
     this.gridImage = new Image(32, 32);
     this.gridImage.src = fantasyTiles;
 
-    //load minotaur image
-    this.minotaurImage = new Image(93, 100);
-    this.minotaurImage.src = Minotaur;
-
     this.gameLoop();
   }
 
@@ -64,27 +50,6 @@ class App extends React.Component {
       0,
       this.myCanvas.current.width,
       this.myCanvas.current.height,
-    );
-  };
-
-  drawStrip = (
-    x: number,
-    y: number,
-    frame = 0,
-    image = this.minotaurImage,
-    scale = 200,
-  ) => {
-    const ctx = document.querySelector('canvas')?.getContext('2d')!;
-    ctx.drawImage(
-      image,
-      image.width * frame,
-      0,
-      image.width,
-      image.height,
-      x - frame * 7,
-      y,
-      scale,
-      scale,
     );
   };
 
@@ -109,12 +74,12 @@ class App extends React.Component {
     let xOffset = 0;
 
     for (
-      let x = 0;
+      let x = -16;
       x * sizeOfTiles * 1.5 + xOffset < this.myCanvas.current.width;
       x += 1
     ) {
       for (
-        let y = 0;
+        let y = -16;
         (y * Math.sqrt(3) * sizeOfTiles) / 4 < this.myCanvas.current.height;
         y += 1
       ) {
@@ -128,24 +93,29 @@ class App extends React.Component {
     }
   };
 
+  clipBackground = () => {
+    const ctx = this.myCanvas.current.getContext('2d');
+    ctx.rect(
+      sizeOfTiles,
+      sizeOfTiles,
+      this.myCanvas.current.width - sizeOfTiles * 2,
+      this.myCanvas.current.height - sizeOfTiles * 2,
+    );
+    ctx.stroke();
+    ctx.clip();
+  };
+
   gameLoop = () => {
-    // this.clearScreen();
     window.requestAnimationFrame(this.gameLoop);
 
     // calc elapsed time since last loop
-
     now = Date.now();
     elapsed = now - then;
 
     // if enough time has elapsed, draw the next frame
     if (elapsed > fpsInterval) {
-      if (this.frame >= 5) {
-        this.frame = 0;
-      }
+      this.clipBackground();
       this.drawGridOfImages();
-      this.drawStrip(70, 100, this.frame);
-      this.frame += 1;
-
       // Get ready for next frame by setting then=now, but also adjust for your
       // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
       then = now - (elapsed % fpsInterval);
@@ -153,9 +123,12 @@ class App extends React.Component {
   };
 
   setupCanvas = () => {
-    this.myCanvas.current.style.background = 'white';
-    this.myCanvas.current.height = window.innerHeight / 2;
-    this.myCanvas.current.width = window.innerWidth / 2;
+    // this.myCanvas.current.style.background = 'white';
+    this.myCanvas.current.style.background = document.querySelector(
+      'body',
+    )?.style.backgroundColor;
+    this.myCanvas.current.height = window.innerHeight * 0.7;
+    this.myCanvas.current.width = window.innerWidth * 0.7;
   };
 
   render() {

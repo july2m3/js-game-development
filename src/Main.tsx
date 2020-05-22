@@ -52,18 +52,22 @@ class Main extends React.Component<MyProps, MyState> {
           {showOptions && (
             <div>
               <button onClick={() => this.showMap(<RunAndJump />)}>
-                Running and Jump Example
+                Square with keyboard controls
               </button>
 
               <button onClick={() => this.showMap(<Collision />)}>
-                Collision Detection example
+                Collision Detection
               </button>
 
               <button onClick={() => this.showMap(<TileMap />)}>
-                Show TileMap
+                Simple TileMap
               </button>
               <button onClick={() => this.showMap(<SpriteAnimations />)}>
-                Show SpriteAnimations
+                Sprite Animation
+              </button>
+
+              <button onClick={() => this.showMap(<HexTileMap />)}>
+                Hex Tile Map
               </button>
             </div>
           )}
