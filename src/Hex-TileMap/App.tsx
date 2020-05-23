@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 /* eslint-disable react/jsx-filename-extension */
@@ -9,6 +10,20 @@ import fantasyTiles from './borderless.png';
 
 const sizeOfTiles = 64;
 const sizeBetweenTiles = sizeOfTiles * 2;
+
+// 8 x 6 grid
+// prettier-ignore
+// do grid of x by x, otherwise it doesn't work
+const grid = [
+  [0, 0, 1, 1, 2, 2, 3, 3],
+  [4, 4, 5, 5, 6, 6, 7, 7],
+  [8, 8, 9, 9, 10, 10, 11, 11],
+  [12, 12, 13, 13, 14, 14, 15, 15],
+  [16, 16, 17, 17, 18, 18, 19, 19],
+  [20, 20, 21, 21, 22, 22, 23, 23],
+  [24, 24, 25, 25, 26, 26, 27, 27],
+  [28, 28, 29, 29, 30, 30, 31, 31],
+];
 
 // let stop = false;
 // let frameCount = 0;
@@ -56,11 +71,16 @@ class App extends React.Component {
   drawHexImage = (x: number, y: number, tile = Math.random() * 7) => {
     const ctx = document.querySelector('canvas')?.getContext('2d')!;
     const w = 32;
+    const h = 48;
+
+    // console.log(
+    // `When tile: ${tile},  ${Math.floor(tile / 7)} and mod is ${tile % 7}`,
+    // );
 
     ctx.drawImage(
       this.gridImage,
-      w * tile,
-      16,
+      w * Math.floor(tile % 8),
+      16 + 48 * Math.floor(tile / 8),
       w,
       w,
       x,
@@ -68,6 +88,22 @@ class App extends React.Component {
       sizeOfTiles,
       sizeOfTiles,
     );
+  };
+
+  drawGridOfTiles = () => {
+    let xOffset = 0;
+    for (let x = 0; x < grid.length; x++) {
+      for (let y = 0; y < grid[x].length; y++) {
+        // console.log(grid[x][y]);
+        xOffset = y % 2 === 0 ? sizeOfTiles * 0.75 : 0;
+        this.drawHexImage(
+          x * sizeOfTiles * 1.5 + xOffset,
+          (y * (Math.sqrt(3) * sizeOfTiles)) / 4,
+          // grid[x][y],
+          grid[y][x],
+        );
+      }
+    }
   };
 
   drawGridOfImages = () => {
@@ -114,8 +150,9 @@ class App extends React.Component {
 
     // if enough time has elapsed, draw the next frame
     if (elapsed > fpsInterval) {
-      this.clipBackground();
-      this.drawGridOfImages();
+      // this.clipBackground();
+      // this.drawGridOfImages();
+      this.drawGridOfTiles();
       // Get ready for next frame by setting then=now, but also adjust for your
       // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
       then = now - (elapsed % fpsInterval);
