@@ -62,9 +62,7 @@ class App extends React.Component {
     fpsInterval = 1000 / fps;
     then = Date.now();
 
-    // load fantasy tiles
     this.gridImage = new Image(32, 32);
-    // this.gridImage = new Image();
     this.gridImage.src = fantasyTiles;
 
     window.addEventListener('mousemove', this.mouseMove);
@@ -72,10 +70,20 @@ class App extends React.Component {
     this.gameLoop();
   }
 
+  // Remember, element (myCanvas), is different than bitmap (buffer)
+  // see: https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
   mouseMove = (e: any) => {
     const rectangle = this.myCanvas.current.getBoundingClientRect();
-    this.mouseX = e.clientX - rectangle.left;
-    this.mouseY = e.clientY - rectangle.top;
+    // const rectangle = buffer!.canvas.getBoundingClientRect();
+    const canvas = buffer!.canvas;
+    // const canvas = this.myCanvas.current;
+
+    // relationship bitmap vs. element for X
+    const scaleX = canvas.width / rectangle.width;
+    const scaleY = canvas.height / rectangle.height;
+
+    this.mouseX = (e.clientX - rectangle.left) * scaleX; // scale mouse coordinates after they have
+    this.mouseY = (e.clientY - rectangle.top) * scaleY; // been adjusted to be relative to element
   };
 
   clearScreen = () => {
@@ -139,6 +147,21 @@ class App extends React.Component {
     }
   };
 
+  drawSquares = () => {
+    if (gridCoordinates) {
+      for (let i = 0; i <= gridCoordinates.length; i++) {
+        buffer!.beginPath();
+        buffer!.rect(
+          gridCoordinates[i].xCoordinate,
+          gridCoordinates[i].yCoordinate,
+          10,
+          10,
+        );
+        buffer!.stroke();
+      }
+    }
+  };
+
   clipBackground = () => {
     const ctx = this.myCanvas.current.getContext('2d');
     ctx.rect(
@@ -163,6 +186,7 @@ class App extends React.Component {
     if (elapsed > fpsInterval) {
       // this.clipBackground();
       this.drawGridOfTiles();
+      // this.drawSquares();
       ctx.drawImage(
         buffer!.canvas,
         0,
@@ -190,6 +214,7 @@ class App extends React.Component {
     this.myCanvas.current.style.background = document.querySelector(
       'body',
     )?.style.backgroundColor;
+    // this.myCanvas.current.style.background = 'white';
 
     this.myCanvas.current.height = window.innerHeight * 0.7;
     this.myCanvas.current.width = window.innerWidth * 0.7;
