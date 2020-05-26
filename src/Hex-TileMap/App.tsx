@@ -1,3 +1,4 @@
+/* eslint-disable lines-between-class-members */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
@@ -13,10 +14,7 @@ const buffer = document.createElement('canvas').getContext('2d');
 const bufferSize = 32;
 // const bufferColumns = 16;
 
-// const sizeOfTiles = 32;
 const sizeOfTiles = 48;
-//grid[x][y] = grid[0,2] = (18,3)
-// const sizeBetweenTiles = sizeOfTiles * 2;
 
 // 8 x 6 grid
 // prettier-ignore
@@ -32,7 +30,6 @@ const grid = [
 
 const gridCoordinates: any[] = [];
 const fps = 5;
-// let startTime;
 let fpsInterval: any;
 let now: any;
 let then: any;
@@ -40,13 +37,9 @@ let elapsed: any;
 
 class App extends React.Component {
   myCanvas: any;
-
   gridImage: any;
-
   mouseX: any;
-
   mouseY: any;
-
   currentTile: any;
 
   constructor(props: any) {
@@ -74,26 +67,15 @@ class App extends React.Component {
   // see: https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
   mouseMove = (e: any) => {
     const rectangle = this.myCanvas.current.getBoundingClientRect();
-    // const rectangle = buffer!.canvas.getBoundingClientRect();
-    const canvas = buffer!.canvas;
-    // const canvas = this.myCanvas.current;
+    const { canvas } = buffer!;
 
     // relationship bitmap vs. element for X
     const scaleX = canvas.width / rectangle.width;
     const scaleY = canvas.height / rectangle.height;
 
-    this.mouseX = (e.clientX - rectangle.left) * scaleX; // scale mouse coordinates after they have
-    this.mouseY = (e.clientY - rectangle.top) * scaleY; // been adjusted to be relative to element
-  };
-
-  clearScreen = () => {
-    const ctx = this.myCanvas.current.getContext('2d');
-    ctx.clearRect(
-      0,
-      0,
-      this.myCanvas.current.width,
-      this.myCanvas.current.height,
-    );
+    // scale coordinates after they have been adjusted to relative element
+    this.mouseX = (e.clientX - rectangle.left) * scaleX;
+    this.mouseY = (e.clientY - rectangle.top) * scaleY;
   };
 
   resize = () => {
@@ -137,7 +119,6 @@ class App extends React.Component {
         ) {
           this.drawHexTiles(xPoint, yPoint, 16);
         } else {
-          // this.drawHexTiles(xPoint, yPoint, grid[y][x]);
           this.drawHexTiles(xPoint, yPoint, grid[x][y]);
         }
         if (gridCoordinates.length <= 49) {
@@ -145,33 +126,6 @@ class App extends React.Component {
         }
       }
     }
-  };
-
-  drawSquares = () => {
-    if (gridCoordinates) {
-      for (let i = 0; i <= gridCoordinates.length; i++) {
-        buffer!.beginPath();
-        buffer!.rect(
-          gridCoordinates[i].xCoordinate,
-          gridCoordinates[i].yCoordinate,
-          10,
-          10,
-        );
-        buffer!.stroke();
-      }
-    }
-  };
-
-  clipBackground = () => {
-    const ctx = this.myCanvas.current.getContext('2d');
-    ctx.rect(
-      sizeOfTiles,
-      sizeOfTiles,
-      this.myCanvas.current.width - sizeOfTiles * 2,
-      this.myCanvas.current.height - sizeOfTiles * 2,
-    );
-    ctx.stroke();
-    ctx.clip();
   };
 
   gameLoop = () => {
@@ -184,9 +138,7 @@ class App extends React.Component {
 
     // if enough time has elapsed, draw the next frame
     if (elapsed > fpsInterval) {
-      // this.clipBackground();
       this.drawGridOfTiles();
-      // this.drawSquares();
       ctx.drawImage(
         buffer!.canvas,
         0,
@@ -214,7 +166,6 @@ class App extends React.Component {
     this.myCanvas.current.style.background = document.querySelector(
       'body',
     )?.style.backgroundColor;
-    // this.myCanvas.current.style.background = 'white';
 
     this.myCanvas.current.height = window.innerHeight * 0.7;
     this.myCanvas.current.width = window.innerWidth * 0.7;
@@ -239,12 +190,6 @@ class App extends React.Component {
         this.currentTile = gridCoordinates[i];
       }
     }
-  };
-
-  drawCircle = () => {
-    // const context = this.myCanvas.current.getContext('2d');
-    buffer!.beginPath();
-    buffer!.rect(this.mouseX, this.mouseY, 10, 10);
   };
 
   render() {
