@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable lines-between-class-members */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/no-unresolved */
@@ -28,59 +29,65 @@ const grid = [
   [24, 24, 25, 25, 26, 26, 27],
 ];
 
-const gridCoordinates: any[] = [];
-const fps = 5;
-let fpsInterval: any;
-let now: any;
-let then: any;
-let elapsed: any;
-
-class App extends React.Component {
+// https://stackoverflow.com/questions/46987816/using-state-in-react-with-typescript
+interface IProps {}
+interface IState {
+  gridCoordinates: any[];
+  fps: number;
+  fpsInterval: any;
+  now: any;
+  then: any;
+  elapsed: any;
+  currentTile: any;
   myCanvas: any;
   gridImage: any;
   mouseX: any;
   mouseY: any;
-  currentTile: any;
+}
 
-  constructor(props: any) {
+class App extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
-    this.myCanvas = React.createRef();
-    this.mouseX = 100;
-    this.mouseY = 100;
-    this.currentTile = { x: 100, y: 100 };
+    this.state = {
+      gridImage: new Image(32, 32),
+      fps: 5,
+      mouseX: 100,
+      mouseY: 100,
+      myCanvas: React.createRef(),
+      fpsInterval: null,
+      gridCoordinates: [],
+      now: Date.now(),
+      then: Date.now(),
+      elapsed: null,
+      currentTile: { x: 100, y: 100 },
+    };
   }
 
-  componentDidMount() {
+  componentDidMount({ fps, gridImage } = this.state) {
     this.setupCanvas();
-    fpsInterval = 1000 / fps;
-    then = Date.now();
-
-    this.gridImage = new Image(32, 32);
-    this.gridImage.src = fantasyTiles;
-
+    this.setState({ fpsInterval: 1000 / fps });
+    gridImage.src = fantasyTiles;
     window.addEventListener('mousemove', this.mouseMove);
-    window.addEventListener('resize', this.resize, { passive: true });
     this.gameLoop();
   }
 
   // Remember, element (myCanvas), is different than bitmap (buffer)
   // see: https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
-  mouseMove = (e: any) => {
-    const rectangle = this.myCanvas.current.getBoundingClientRect();
+  mouseMove = (e: any, { myCanvas } = this.state) => {
+    const rectangle = myCanvas.current.getBoundingClientRect();
     const { canvas } = buffer!;
-
-    // relationship bitmap vs. element for X
     const scaleX = canvas.width / rectangle.width;
     const scaleY = canvas.height / rectangle.height;
 
     // scale coordinates after they have been adjusted to relative element
-    this.mouseX = (e.clientX - rectangle.left) * scaleX;
-    this.mouseY = (e.clientY - rectangle.top) * scaleY;
+    this.setState(() => ({ mouseX: (e.clientX - rectangle.left) * scaleX }));
+    this.setState(() => ({ mouseY: (e.clientY - rectangle.top) * scaleY }));
   };
 
-  resize = () => {
-    this.myCanvas.current.height = window.innerHeight / 2;
-    this.myCanvas.current.width = window.innerWidth / 2;
+  // resize canvas element when window resizes
+  resize = ({ myCanvas } = this.state) => {
+    myCanvas.current.height = window.innerHeight / 2;
+    myCanvas.current.width = window.innerWidth / 2;
     this.drawGridOfTiles();
   };
 
@@ -91,9 +98,10 @@ class App extends React.Component {
     frames = 8,
     width = 32,
     height = 48,
+    { gridImage } = this.state,
   ) => {
     buffer!.drawImage(
-      this.gridImage,
+      gridImage,
       width * Math.floor(tile % frames),
       16 + height * Math.floor(tile / frames),
       width,
@@ -105,7 +113,7 @@ class App extends React.Component {
     );
   };
 
-  drawGridOfTiles = () => {
+  drawGridOfTiles = ({ gridCoordinates, currentTile } = this.state) => {
     for (let x = 0; x < grid.length; x++) {
       for (let y = 0; y < grid[x].length; y++) {
         const xOffset = y % 2 === 0 ? sizeOfTiles * 0.75 : 0;
@@ -114,27 +122,33 @@ class App extends React.Component {
         const gridCoordinate = { xCoordinate: xPoint, yCoordinate: yPoint };
 
         if (
-          this.currentTile.xCoordinate === xPoint &&
-          this.currentTile.yCoordinate === yPoint
+          currentTile.xCoordinate === xPoint &&
+          currentTile.yCoordinate === yPoint
         ) {
           this.drawHexTiles(xPoint, yPoint, 16);
         } else {
           this.drawHexTiles(xPoint, yPoint, grid[x][y]);
         }
+        // if (gridCoordinates.length <= 49) {
         if (gridCoordinates.length <= 49) {
+          // gridCoordinates.push(gridCoordinate);
           gridCoordinates.push(gridCoordinate);
+          this.setState((prevState) => ({
+            gridCoordinates: [...prevState.gridCoordinates, gridCoordinate],
+          }));
         }
       }
     }
   };
 
   gameLoop = () => {
+    const { fpsInterval, elapsed, myCanvas } = this.state;
+    const ctx = myCanvas.current.getContext('2d');
     window.requestAnimationFrame(this.gameLoop);
-    const ctx = this.myCanvas.current.getContext('2d');
 
     // calc elapsed time since last loop
-    now = Date.now();
-    elapsed = now - then;
+    this.setState(() => ({ now: Date.now() }));
+    this.setState((prevState) => ({ elapsed: prevState.now - prevState.then }));
 
     // if enough time has elapsed, draw the next frame
     if (elapsed > fpsInterval) {
@@ -147,57 +161,61 @@ class App extends React.Component {
         buffer!.canvas.height,
         0,
         0,
-        this.myCanvas.current.width,
-        this.myCanvas.current.height,
+        myCanvas.current.width,
+        myCanvas.current.height,
       );
 
       this.isMouseOnTile();
 
       // Get ready for next frame by setting then=now, but also adjust for your
       // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
-      then = now - (elapsed % fpsInterval);
+      this.setState((prevState) => ({
+        then: prevState.now - (prevState.elapsed % prevState.fpsInterval),
+      }));
     }
   };
 
-  setupCanvas = () => {
+  setupCanvas = ({ myCanvas } = this.state) => {
     buffer!.canvas.height = 9 * bufferSize;
     buffer!.canvas.width = 16 * bufferSize;
     buffer!.canvas.style.background = 'white';
-    this.myCanvas.current.style.background = document.querySelector(
+    myCanvas.current.style.background = document.querySelector(
       'body',
     )?.style.backgroundColor;
 
-    this.myCanvas.current.height = window.innerHeight * 0.7;
-    this.myCanvas.current.width = window.innerWidth * 0.7;
+    myCanvas.current.height = window.innerHeight * 0.7;
+    myCanvas.current.width = window.innerWidth * 0.7;
   };
 
-  isMouseOnTile = () => {
+  isMouseOnTile = (
+    { gridCoordinates, mouseX, mouseY, myCanvas } = this.state,
+  ) => {
     if (
-      this.mouseX >= this.myCanvas.current.width ||
-      this.mouseX <= 0 ||
-      this.mouseY >= this.myCanvas.current.height ||
-      this.mouseY <= 0
+      mouseX >= myCanvas.current.width ||
+      mouseX <= 0 ||
+      mouseY >= myCanvas.current.height ||
+      mouseY <= 0
     ) {
       return;
     }
     for (let i = 0; i < gridCoordinates.length; i++) {
       if (
-        gridCoordinates[i].xCoordinate < this.mouseX &&
-        gridCoordinates[i].xCoordinate + sizeOfTiles > this.mouseX &&
-        gridCoordinates[i].yCoordinate < this.mouseY &&
-        gridCoordinates[i].yCoordinate + sizeOfTiles > this.mouseY
+        gridCoordinates[i].xCoordinate < mouseX &&
+        gridCoordinates[i].xCoordinate + sizeOfTiles > mouseX &&
+        gridCoordinates[i].yCoordinate < mouseY &&
+        gridCoordinates[i].yCoordinate + sizeOfTiles > mouseY
       ) {
-        this.currentTile = gridCoordinates[i];
+        this.setState(() => ({ currentTile: gridCoordinates[i] }));
       }
     }
   };
 
-  render() {
+  render({ myCanvas } = this.state) {
     return (
       <div className="App">
         <h1>Game Development</h1>
         <h2>Example</h2>
-        <canvas ref={this.myCanvas} />
+        <canvas ref={myCanvas} />
       </div>
     );
   }
