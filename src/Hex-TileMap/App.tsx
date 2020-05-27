@@ -1,9 +1,3 @@
-/* eslint-disable react/no-unused-state */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable no-plusplus */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
 import '../style.css';
@@ -223,7 +217,7 @@ class App extends React.Component<IProps, IState> {
 
   render({ myCanvas } = this.state) {
     return (
-      <div className="App">
+      <div className='App'>
         <h1>Game Development</h1>
         <h2>Example</h2>
         <canvas ref={myCanvas} />
