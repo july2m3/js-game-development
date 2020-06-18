@@ -11,6 +11,7 @@ import TileMap from './Tilemap/App';
 import SpriteAnimations from './SpriteAnimations/App';
 import HexTileMap from './Hex-TileMap/App';
 import Dice from './dice-example/App';
+import ArmyGameSprite from './army-game-sprites/App';
 
 import './style.css';
 
@@ -73,6 +74,10 @@ class Main extends React.Component<MyProps, MyState> {
 
               <button onClick={() => this.showMap(<Dice />)}>
                 Dice Roll Example
+              </button>
+
+              <button onClick={() => this.showMap(<ArmyGameSprite />)}>
+                Army Game Sprites
               </button>
             </div>
           )}
