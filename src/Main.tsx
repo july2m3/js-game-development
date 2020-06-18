@@ -10,6 +10,7 @@ import Collision from './Collision-Detection/App';
 import TileMap from './Tilemap/App';
 import SpriteAnimations from './SpriteAnimations/App';
 import HexTileMap from './Hex-TileMap/App';
+import Dice from './dice-example/App';
 
 import './style.css';
 
@@ -68,6 +69,10 @@ class Main extends React.Component<MyProps, MyState> {
 
               <button onClick={() => this.showMap(<HexTileMap />)}>
                 Hex Tile Map
+              </button>
+
+              <button onClick={() => this.showMap(<Dice />)}>
+                Dice Roll Example
               </button>
             </div>
           )}
