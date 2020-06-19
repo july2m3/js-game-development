@@ -51,7 +51,6 @@ const ArmyGameSprites = () => {
         updateCanvas(buffer!, myCanvas.current!);
 
         // draw stuff here
-        // minotaurSprite.drawStrip(buffer!, 200, 100, 200);
         spearmanSprite.drawStrip(buffer!, 100, 100, 100);
         updateCanvas(buffer!, myCanvas.current!);
       }
