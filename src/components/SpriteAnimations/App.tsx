@@ -4,7 +4,7 @@
 import React from 'react';
 
 import Minotaur from './minotaur.png'; // 93 x 100
-import '../style.css';
+// import '../style.css';
 
 import Sprite from './Sprite';
 

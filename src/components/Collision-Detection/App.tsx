@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
-import '../style.css';
+// import '../../style.css';
 import Rectangle from './Rectangle';
 
 const squareSize = 64;

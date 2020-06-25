@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// import '../style.css';
 import greenDice1 from './images/diceRed1.png';
 import greenDice2 from './images/diceRed2.png';
 import greenDice3 from './images/diceRed3.png';
@@ -93,17 +92,17 @@ const Dice = () => {
   });
 
   return (
-    <div className='App'>
+    <div className="App">
       <h1>Game Development</h1>
       <h2>Example</h2>
       <canvas ref={myCanvas} />
-      <img src={greenDice1} style={{ display: 'none' }} alt='none' />
-      <img src={greenDice2} style={{ display: 'none' }} alt='none' />
-      <img src={greenDice3} style={{ display: 'none' }} alt='none' />
-      <img src={greenDice4} style={{ display: 'none' }} alt='none' />
-      <img src={greenDice5} style={{ display: 'none' }} alt='none' />
-      <img src={greenDice6} style={{ display: 'none' }} alt='none' />
-      <img src={minotaurImage} style={{ display: 'none' }} alt='none' />
+      <img src={greenDice1} style={{ display: 'none' }} alt="none" />
+      <img src={greenDice2} style={{ display: 'none' }} alt="none" />
+      <img src={greenDice3} style={{ display: 'none' }} alt="none" />
+      <img src={greenDice4} style={{ display: 'none' }} alt="none" />
+      <img src={greenDice5} style={{ display: 'none' }} alt="none" />
+      <img src={greenDice6} style={{ display: 'none' }} alt="none" />
+      <img src={minotaurImage} style={{ display: 'none' }} alt="none" />
     </div>
   );
 };

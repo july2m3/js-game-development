@@ -5,13 +5,13 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
-import RunAndJump from './Run-And-Jump-Example/App';
-import Collision from './Collision-Detection/App';
-import TileMap from './Tilemap/App';
-import SpriteAnimations from './SpriteAnimations/App';
-import HexTileMap from './Hex-TileMap/App';
-import Dice from './dice-example/App';
-import ArmyGameSprite from './army-game-sprites/App';
+import RunAndJump from './components/Run-And-Jump-Example/App';
+import Collision from './components/Collision-Detection/App';
+import TileMap from './components/Tilemap/App';
+import SpriteAnimations from './components/SpriteAnimations/App';
+import HexTileMap from './components/Hex-TileMap/App';
+import Dice from './components/dice-example/App';
+import ArmyGameSprite from './components/army-game-sprites/App';
 
 import './style.css';
 

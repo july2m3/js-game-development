@@ -3,7 +3,6 @@
 /* eslint-disable import/extensions */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 
 import Main from './Main';
 // import App from './Run-And-Jump-Example/App';

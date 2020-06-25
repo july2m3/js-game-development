@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
-import '../style.css';
+// import '../style.css';
 
 const buffer = document.createElement('canvas').getContext('2d');
 const size = 32;

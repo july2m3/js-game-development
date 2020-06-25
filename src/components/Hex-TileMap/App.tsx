@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../style.css';
+// import '../style.css';
 
 import fantasyTiles from './borderless.png';
 
@@ -217,7 +217,7 @@ class App extends React.Component<IProps, IState> {
 
   render({ myCanvas } = this.state) {
     return (
-      <div className='App'>
+      <div className="App">
         <h1>Game Development</h1>
         <h2>Example</h2>
         <canvas ref={myCanvas} />
