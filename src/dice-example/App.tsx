@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // import '../style.css';
-import greenDice1 from './images/diceGreen1.png';
-import greenDice2 from './images/diceGreen2.png';
-import greenDice3 from './images/diceGreen3.png';
-import greenDice4 from './images/diceGreen4.png';
-import greenDice5 from './images/diceGreen5.png';
-import greenDice6 from './images/diceGreen6.png';
+import greenDice1 from './images/diceRed1.png';
+import greenDice2 from './images/diceRed2.png';
+import greenDice3 from './images/diceRed3.png';
+import greenDice4 from './images/diceRed4.png';
+import greenDice5 from './images/diceRed5.png';
+import greenDice6 from './images/diceRed6.png';
 import minotaurImage from './images/minotaur.png';
 
 import clearCanvas from './game-functions/clearCanvas';
@@ -16,19 +16,26 @@ import { jsxClosingElement } from '@babel/types';
 import Sprite from '../SpriteAnimations/Sprite';
 
 const Dice = () => {
-  const fps = 5;
+  const fps = 10;
   let startTime;
   let fpsInterval: any;
   let now: any;
   let then: any;
   let elapsed: any;
-  const bufferWidth = 1000;
-  const bufferHeight = 1000;
+  const bufferWidth = 500;
+  const bufferHeight = 500;
   const myCanvas = useRef<HTMLCanvasElement>(null);
   const [buffer, setBuffer] = useState(
     document.createElement('canvas').getContext('2d'),
   );
-  const [frames, setupFrames] = useState([greenDice1, greenDice2, greenDice3, greenDice4, greenDice5, greenDice6]);
+  const [frames, setupFrames] = useState([
+    greenDice1,
+    greenDice2,
+    greenDice3,
+    greenDice4,
+    greenDice5,
+    greenDice6,
+  ]);
   const minotaurSprite = new Sprite(minotaurImage, 93, 100, 5);
 
   // initial setup
@@ -49,7 +56,6 @@ const Dice = () => {
     let requestId: number;
 
     const render = () => {
-
       // calc elapsed time since last loop
       now = Date.now();
       elapsed = now - then;
@@ -62,12 +68,16 @@ const Dice = () => {
         updateCanvas(buffer!, myCanvas.current!);
 
         // draw stuff here
-        drawImageOnCanvas(buffer!.canvas, frames[currentFrame], bufferWidth / 2, bufferHeight / 2);
+        drawImageOnCanvas(
+          buffer!.canvas,
+          frames[currentFrame],
+          bufferWidth / 2,
+          bufferHeight / 2,
+        );
         minotaurSprite.drawStrip(buffer!, 200, 100, 200);
         updateCanvas(buffer!, myCanvas.current!);
         currentFrame++;
         if (currentFrame >= frames.length) currentFrame = 0;
-
       }
       // Get ready for next frame by setting then=now, but also adjust for your
       // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
